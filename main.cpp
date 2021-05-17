@@ -27,17 +27,20 @@ void find_minmax(const vector <double>&  numbers, double& max, double& min)
     }
 }
 
-vector <size_t> make_histogram(const vector<double>& numbers, size_t number_count, size_t bin_count, double max, double min)
+vector <size_t> make_histogram(const vector<double>& numbers, size_t number_count, size_t bin_count)
 {
     //const vector<size_t>& bins,
     vector<size_t> bins(bin_count);
+    double max=0;
+    double min=0;
+    find_minmax(numbers,max,min);
     double bin_size=(max-min)/bin_count;
     for (size_t i = 0; i < number_count; i++)
     {
         bool f = false;
         for (size_t j = 0; (j < bin_count - 1) && !f; j++)
         {
-            auto lo = min + j * bin_size;
+            auto lo = min + (j * bin_size);
             auto hi = min + (j + 1)*bin_size;
             if ((lo <= numbers[i]) && (hi > numbers[i]))
             {
@@ -104,7 +107,12 @@ svg_begin(double width, double height) {
 
 void
 svg_text(double left, double baseline, string text) {
-    cout << "<text x='20' y='35'>anything you want</text>";
+    cout << "<text x='"<<left<<"' y='"<<baseline<<"'>"<<text<<"</text>";
+}
+
+void svg_rect(double x, double y, double width, double height, string stroke = "blue", string fill = "green")
+{
+    cout<<"<rect x='"<<x<<"' y='"<<y<<"' width='"<<width<<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"' />";
 }
 
 void
@@ -114,8 +122,23 @@ svg_end() {
 
 void show_histogram_svg(const vector<size_t>& bins)
 {
-    svg_begin(400, 300);
-    svg_text(20, 20, to_string(bins[0]));
+    double top=0;
+    const auto IMAGE_WIDTH = 400;
+    const auto IMAGE_HEIGHT = 300;
+    const auto TEXT_LEFT = 20;
+    const auto TEXT_BASELINE = 20;
+    const auto TEXT_WIDTH = 50;
+    const auto BIN_HEIGHT = 30;
+    const auto BLOCK_WIDTH = 10;
+
+    svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
+    for (size_t bin:bins)
+    {
+        const double bin_width = BLOCK_WIDTH * bin;
+        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
+        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
+        top += BIN_HEIGHT;
+    }
     svg_end();
 }
 //void svg end
@@ -126,18 +149,18 @@ int main()
     double bin_size, max, min;
     string str;
 
-    cout <<"Number count :";
+    cerr <<"Number count :";
     cin >> number_count;
     const size_t Screen_Width=80;
 
     vector<string> title;
     //const vector<size_t> bins(bin_count);
-    cout<<"Input numbers "<<"\n";
+    cerr<<"Input numbers "<<"\n";
     const auto numbers=input_numbers(number_count);
-    cout<<"Bin count :";
+    cerr<<"Bin count :";
     cin >> bin_count;
 
-    cout<<"Titles : \n";
+    cerr<<"Titles : \n";
     for(size_t i=0; i<bin_count; i++)
     {
         cin >>str;
@@ -146,7 +169,7 @@ int main()
 
     find_minmax(numbers, max, min);
     //bin_size = (max - min) / bin_count;
-    const auto bins=make_histogram(numbers, number_count, bin_count, max, min);
+    const auto bins=make_histogram(numbers, number_count, bin_count);
 
     Max_bin_index=bins[0];
     for(size_t i=0; i<bin_count; i++)
