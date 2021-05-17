@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string.h>
+#include "histogram.h"
 
 using namespace std;
 vector<double> input_numbers(size_t count)
@@ -13,7 +14,7 @@ vector<double> input_numbers(size_t count)
     return numbers;
 }
 
-void find_minmax(const vector <double>&  numbers, double& max, double& min)
+/*void find_minmax(const vector <double>&  numbers, double& max, double& min)
 {
    // double min,max;
     max=numbers[0];
@@ -25,7 +26,7 @@ void find_minmax(const vector <double>&  numbers, double& max, double& min)
         else if (x<min)
             min=x;
     }
-}
+}*/
 
 vector <size_t> make_histogram(const vector<double>& numbers, size_t number_count, size_t bin_count)
 {
