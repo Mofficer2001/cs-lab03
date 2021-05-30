@@ -28,7 +28,7 @@ vector<double> input_numbers(size_t count)
     }
 }*/
 
-vector <size_t> make_histogram(const vector<double>& numbers, size_t number_count, size_t bin_count)
+/*vector <size_t> make_histogram(const vector<double>& numbers, size_t number_count, size_t bin_count)
 {
     //const vector<size_t>& bins,
     vector<size_t> bins(bin_count);
@@ -53,7 +53,7 @@ vector <size_t> make_histogram(const vector<double>& numbers, size_t number_coun
             bins[bin_count - 1]++;
     }
     return bins;
-}
+}*/
 
 /*size_t max_bin_index(const vector<size_t>& bins,  size_t bin_count)
 {
@@ -68,7 +68,7 @@ vector <size_t> make_histogram(const vector<double>& numbers, size_t number_coun
     return max_index;
 }*/
 
-void show_histogram_text(const vector<double>& numbers, const vector<size_t>& bins, const vector<string>& title, double bin_count, double title_max, size_t Max_Asterisk, size_t Max_bin_index)
+/*void show_histogram_text(const vector<double>& numbers, const vector<size_t>& bins, const vector<string>& title, double bin_count, double title_max, size_t Max_Asterisk, size_t Max_bin_index)
 {
     size_t heigh, title_len;
     //size_t Max_bin_index= max_bin_index(bins,bin_count);
@@ -94,9 +94,9 @@ void show_histogram_text(const vector<double>& numbers, const vector<size_t>& bi
         }
         cout<<"\n";
     }
-}
+}*/
 
-void
+/*void
 svg_begin(double width, double height) {
     cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
     cout << "<svg ";
@@ -104,24 +104,34 @@ svg_begin(double width, double height) {
     cout << "height='" << height << "' ";
     cout << "viewBox='0 0 " << width << " " << height << "' ";
     cout << "xmlns='http://www.w3.org/2000/svg'>\n";
-}
+}*/
 
-void
+/*void
 svg_text(double left, double baseline, string text) {
     cout << "<text x='"<<left<<"' y='"<<baseline<<"'>"<<text<<"</text>";
-}
+}*/
 
-void svg_rect(double x, double y, double width, double height, string stroke = "blue", string fill = "green")
+/*void svg_rect(double x, double y, double width, double height, string stroke = "blue", string fill = "green")
 {
     cout<<"<rect x='"<<x<<"' y='"<<y<<"' width='"<<width<<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"' />";
+}*/
+
+
+void svg_punktirn(double x1, double y1, double x2, double y2, int stroke_width=5, string stroke="gold", double line=15 , double gap=10)
+{
+    cout<<"<line x1='"<<x1<<"' y1='"<<y1<<"' x2='"<<x2<<"' y2='"<<y2<<"' stroke-width= '"<<stroke_width<<"' stroke= '"<<stroke<<"' stroke-dasharray= '"<<line<<" "<<gap<<"'/>";
+    //<line x1="60" y1="120" x2="180" y2="120" style="stroke-dasharray: 10 10; stroke: yellow; stroke-width: 4px;" />
+    //stroke='"<<stroke<<"' stroke-disharray='"<<line<<" "<<gap<<"' />";
+
+   //<line x1='0' y1='0' x2='100' y2='100' stroke='blue' stroke-width='4'/>
 }
 
-void
-svg_end() {
+
+/*void svg_end() {
     cout << "</svg>\n";
-}
+}*/
 
-void show_histogram_svg(const vector<size_t>& bins)
+void show_histogram_svg(const vector<size_t>& bins, int stroke_width)
 {
     double top=0;
     const auto IMAGE_WIDTH = 400;
@@ -131,6 +141,9 @@ void show_histogram_svg(const vector<size_t>& bins)
     const auto TEXT_WIDTH = 50;
     const auto BIN_HEIGHT = 30;
     const auto BLOCK_WIDTH = 10;
+    const auto START_LINE = 0;
+    const auto LINE = 0;
+    const auto GAP = 0;
 
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     for (size_t bin:bins)
@@ -138,7 +151,8 @@ void show_histogram_svg(const vector<size_t>& bins)
         const double bin_width = BLOCK_WIDTH * bin;
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
-        top += BIN_HEIGHT;
+        svg_punktirn(START_LINE, top+BIN_HEIGHT+(int)(stroke_width/2), IMAGE_WIDTH, top+BIN_HEIGHT, stroke_width);
+        top =top+BIN_HEIGHT+stroke_width;
     }
     svg_end();
 }
@@ -187,9 +201,12 @@ int main()
             title_max = title[i].length();
     }
 
+
+    int stroke_width=3;
     const size_t Max_Asterisk=Screen_Width -4-1;
     //show_histogram_text(numbers,bins,title,bin_count,title_max,Max_Asterisk,Max_bin_index);
-    show_histogram_svg(bins);
+    cerr<<stroke_width;
+    show_histogram_svg(bins, stroke_width);
     return 1;
 }
 
