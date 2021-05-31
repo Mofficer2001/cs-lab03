@@ -10,9 +10,9 @@ void show_histogram_text(const vector<double>& numbers, const vector<size_t>& bi
 void svg_begin(double width, double height);
 void
 svg_text(double left, double baseline, string text);
-//void svg_rect(double x, double y, double width, double height);
-//void svg_punktirn(double x1, double y1, double x2, double y2, int stroke_width);
+void svg_rect(double x, double y, double width, double height, string stroke = "blue", string fill = "green");
+void svg_punktirn(double x1, double y1, double x2, double y2, int stroke_width=2, string stroke="gold", double line=15 , double gap=10);
 void svg_end();
-
+void show_histogram_svg(const vector<size_t>& bins, int stroke_width);
 
 //#endif // HISTOGRAM_H_INCLUDED

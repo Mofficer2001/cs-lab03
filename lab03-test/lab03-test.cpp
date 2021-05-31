@@ -51,14 +51,25 @@ void test()
     assert(max == 1);
     assert(min == 1);
 }
+string
+empty_line()
+{
+    double x1=0, y1=0, x2=100, y2=400, line=15, gap=20;
+    int stroke_width= 2;
+    string stroke = "black";
+    svg_punktirn(x1, y1, x2, y2, stroke_width, stroke, line , gap);
+    return "<line x1='"+to_string(x1)+"' y1='"to_string(y1)+"' x2='"+to_string(x2)+"' y2='"+to_string(y2)+"' stroke-width= '"+to_string(stroke_width)+"' stroke= '"+to_string(stroke)+"' stroke-dasharray= '"+to_string(line)+" "+to_string(gap)+"'/>";
+}
 
 int
 main()
 {
-    test_positive();
+    /*test_positive();
     test_negative();
     test_one();
-    test();
+    test();*/
+    return empty_line;
+
 }
 
 

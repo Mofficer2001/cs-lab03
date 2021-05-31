@@ -17,15 +17,25 @@ vector<double> input_numbers(size_t count)
 /*void find_minmax(const vector <double>&  numbers, double& max, double& min)
 {
    // double min,max;
-    max=numbers[0];
-    min=numbers[0];
-    for (double x: numbers)
+    if(numbers.size()!=0)
     {
+        max=numbers[0];
+        min=numbers[0];
+        for (double x: numbers)
+        {
         if (x>max)
             max=x;
         else if (x<min)
             min=x;
+        }
     }
+    else if(numbers.size()==0)
+    {
+        max=0;
+        min=0;
+    }
+
+
 }*/
 
 /*vector <size_t> make_histogram(const vector<double>& numbers, size_t number_count, size_t bin_count)
@@ -95,7 +105,6 @@ vector<double> input_numbers(size_t count)
         cout<<"\n";
     }
 }*/
-
 /*void
 svg_begin(double width, double height) {
     cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -111,27 +120,27 @@ svg_text(double left, double baseline, string text) {
     cout << "<text x='"<<left<<"' y='"<<baseline<<"'>"<<text<<"</text>";
 }*/
 
-void svg_rect(double x, double y, double width, double height, string stroke = "blue", string fill = "green")
+/*void svg_rect(double x, double y, double width, double height, string stroke = "blue", string fill = "green")
 {
     cout<<"<rect x='"<<x<<"' y='"<<y<<"' width='"<<width<<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"' />";
-}
+}*/
 
 
-void svg_punktirn(double x1, double y1, double x2, double y2, int stroke_width=5, string stroke="gold", double line=15 , double gap=10)
+/*void svg_punktirn(double x1, double y1, double x2, double y2, int stroke_width=2, string stroke="gold", double line=15 , double gap=10)
 {
     cout<<"<line x1='"<<x1<<"' y1='"<<y1<<"' x2='"<<x2<<"' y2='"<<y2<<"' stroke-width= '"<<stroke_width<<"' stroke= '"<<stroke<<"' stroke-dasharray= '"<<line<<" "<<gap<<"'/>";
     //<line x1="60" y1="120" x2="180" y2="120" style="stroke-dasharray: 10 10; stroke: yellow; stroke-width: 4px;" />
     //stroke='"<<stroke<<"' stroke-disharray='"<<line<<" "<<gap<<"' />";
 
    //<line x1='0' y1='0' x2='100' y2='100' stroke='blue' stroke-width='4'/>
-}
+}*/
 
 
 /*void svg_end() {
     cout << "</svg>\n";
 }*/
 
-void show_histogram_svg(const vector<size_t>& bins, int stroke_width)
+/*void show_histogram_svg(const vector<size_t>& bins, int stroke_width)
 {
     double top=0;
     const auto IMAGE_WIDTH = 400;
@@ -155,7 +164,8 @@ void show_histogram_svg(const vector<size_t>& bins, int stroke_width)
         top =top+BIN_HEIGHT+stroke_width;
     }
     svg_end();
-}
+}*/
+//void svg end
 
 int main()
 {
