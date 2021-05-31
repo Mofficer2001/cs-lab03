@@ -16,3 +16,17 @@
 1622232431 c:\users\user\desktop\laba-03\cs-lab03\lab03-test\histogram.h
 	<vector>
 
+1622461376 source:c:\users\u211-05\desktop\lab03\lab03\histogram.cpp
+	"histogram.h"
+	<iostream>
+
+1622462629 c:\users\u211-05\desktop\lab03\lab03\histogram.h
+	<vector>
+	<string>
+
+1622462170 source:c:\users\u211-05\desktop\lab03\lab03\lab03-test\lab03-test.cpp
+	"../histogram.h"
+	<iostream>
+	<cassert>
+	<vector>
+

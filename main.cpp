@@ -111,10 +111,10 @@ svg_text(double left, double baseline, string text) {
     cout << "<text x='"<<left<<"' y='"<<baseline<<"'>"<<text<<"</text>";
 }*/
 
-/*void svg_rect(double x, double y, double width, double height, string stroke = "blue", string fill = "green")
+void svg_rect(double x, double y, double width, double height, string stroke = "blue", string fill = "green")
 {
     cout<<"<rect x='"<<x<<"' y='"<<y<<"' width='"<<width<<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"' />";
-}*/
+}
 
 
 void svg_punktirn(double x1, double y1, double x2, double y2, int stroke_width=5, string stroke="gold", double line=15 , double gap=10)
@@ -156,7 +156,6 @@ void show_histogram_svg(const vector<size_t>& bins, int stroke_width)
     }
     svg_end();
 }
-//void svg end
 
 int main()
 {
