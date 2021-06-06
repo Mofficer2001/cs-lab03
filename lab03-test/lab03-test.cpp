@@ -51,8 +51,8 @@ void test()
     assert(max == 1);
     assert(min == 1);
 }
-string
-empty_line()
+
+string empty_line()
 {
     double x1=0, y1=0, x2=100, y2=400, line=15, gap=20;
     int stroke_width= 2;

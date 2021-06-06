@@ -1,14 +1,16 @@
 #include "histogram.h"
 #include <iostream>
 
-void find_minmax(const vector <double>&  numbers, double& max, double& min)
+void find_minmax(const vector<double>& numbers,double& max, double& min)
 {
+    Input dat;
+    //const vector <double>&  numbers,
    // double min,max;
-    if(numbers.size()!=0)
+    if(dat.numbers.size()!=0)
     {
-        max=numbers[0];
-        min=numbers[0];
-        for (double x: numbers)
+        max=dat.numbers[0];
+        min=dat.numbers[0];
+        for (double x : dat.numbers)
         {
         if (x>max)
             max=x;
@@ -16,16 +18,17 @@ void find_minmax(const vector <double>&  numbers, double& max, double& min)
             min=x;
         }
     }
-    else if(numbers.size()==0)
+    else if(dat.numbers.size()==0)
     {
         max=0;
         min=0;
     }
-
-
 }
+
 vector <size_t> make_histogram(const vector<double>& numbers, size_t number_count, size_t bin_count)
 {
+    //
+    Input dat;
     //const vector<size_t>& bins,
     vector<size_t> bins(bin_count);
     double max=0;
@@ -39,7 +42,7 @@ vector <size_t> make_histogram(const vector<double>& numbers, size_t number_coun
         {
             auto lo = min + (j * bin_size);
             auto hi = min + (j + 1)*bin_size;
-            if ((lo <= numbers[i]) && (hi > numbers[i]))
+            if ((lo <= numbers[i]) && (hi >numbers[i]))
             {
                 bins[j]++;
                 f = true;
