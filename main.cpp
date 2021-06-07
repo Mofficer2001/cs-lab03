@@ -245,7 +245,7 @@ int main()
     cerr<<"max="<<max;
     cerr<<"min="<<min;*/
     //bin_size = (max - min) / bin_count;
-    const auto bins=make_histogram(data.numbers,number_count, bin_count);
+    const auto bins=make_histogram(Input a);
 
     Max_bin_index=bins[0];
     for(size_t i=0; i<bin_count; i++)
