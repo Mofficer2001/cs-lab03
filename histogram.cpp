@@ -98,9 +98,9 @@ void svg_rect(double x, double y, double width, double height, string stroke , s
     cout<<"<rect x='"<<x<<"' y='"<<y<<"' width='"<<width<<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"' />";
 }
 
-void svg_punktirn(double x1, double y1, double x2, double y2, int stroke_width, string stroke, double line , double gap)
+string svg_punktirn(double x1, double y1, double x2, double y2, ostream& out, int stroke_width, string stroke, double line , double gap)
 {
-    cout<<"<line x1='"<<x1<<"' y1='"<<y1<<"' x2='"<<x2<<"' y2='"<<y2<<"' stroke-width= '"<<stroke_width<<"' stroke= '"<<stroke<<"' stroke-dasharray= '"<<line<<" "<<gap<<"'/>";
+    out << "<line x1='"<<x1<<"' y1='"<<y1<<"' x2='"<<x2<<"' y2='"<<y2<<"' stroke-width= '"<<stroke_width<<"' stroke= '"<<stroke<<"' stroke-dasharray= '"<<line<<" "<<gap<<"'/>";
     //<line x1="60" y1="120" x2="180" y2="120" style="stroke-dasharray: 10 10; stroke: yellow; stroke-width: 4px;" />
     //stroke='"<<stroke<<"' stroke-disharray='"<<line<<" "<<gap<<"' />";
     //return "<xxx aaa='" + to_string(x1) + "'>";
@@ -130,7 +130,7 @@ void show_histogram_svg(const vector<size_t>& bins, int stroke_width)
         const double bin_width = BLOCK_WIDTH * bin;
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
-        svg_punktirn(START_LINE, top+BIN_HEIGHT+(int)(stroke_width/2)+1, IMAGE_WIDTH, top+BIN_HEIGHT+(int)(stroke_width/2)+1, stroke_width);
+        svg_punktirn(START_LINE, top+BIN_HEIGHT+(int)(stroke_width/2)+1, IMAGE_WIDTH, top+BIN_HEIGHT+(int)(stroke_width/2)+1, cout, stroke_width);
         top =top+BIN_HEIGHT+stroke_width;
     }
     svg_end();
