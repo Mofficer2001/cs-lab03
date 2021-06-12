@@ -6,10 +6,125 @@
 using namespace std;
 /*struct Input {
     vector<double> numbers;
-    vector<string> bin_name;
     size_t bin_count;
 };*/
-/*vector<double> input_numbers(size_t count)
+
+/*Input
+read_input(istream& in) {
+    Input data;
+
+    cerr << "Enter number count: ";
+    size_t number_count;
+    in >> number_count;
+
+    cerr << "Enter numbers: ";
+    data.numbers = input_numbers(in, number_count);
+
+    cerr<<"Enter bin count :";
+    size_t bin_count;
+    in >> bin_count;
+
+    return data;
+}*/
+//void svg end
+
+int main()
+{
+    size_t number_count, bin_count, bin_index,Max_bin_index, heigh, title_max, title_len;
+    double bin_size, max, min;
+    //string str;
+
+    Input input=read_input(cin, true);
+    //vector<string> title;
+
+    //const vector<size_t> bins(bin_count);
+    //cerr<<"Input numbers "<<"\n";
+    //const auto numbers=input_numbers(cin, number_count);
+
+    /*cerr<<"Titles : \n";
+    for(size_t i=0; i<input.bin_count; i++)
+    {
+        cin >>str;
+        title.push_back(str);
+    }*/
+
+    find_minmax(input.numbers, max, min);
+    //bin_size = (max - min) / bin_count;
+    const auto bins=make_histogram(input);
+
+    /*Max_bin_index=bins[0];
+    for(size_t i=0; i<input.bin_count; i++)
+    {
+        if (bins[i] > Max_bin_index)
+            Max_bin_index=bins[i];
+    }*/
+
+    //Max_bin_index=max_bin_index(bins,bin_count);
+    /*title_max=input.bin_title[0].length();
+    for(size_t i=0; i<input.bin_count; i++)
+    {
+        if (input.bin_title[i].length()> title_max)
+            title_max = input.bin_title[i].length();
+    }*/
+
+
+    int stroke_width=3;
+    //show_histogram_text(numbers,bins,title,bin_count,title_max,Max_Asterisk,Max_bin_index);
+    cerr<<stroke_width;
+    show_histogram_svg(bins, stroke_width);
+    return 1;
+}
+
+//cin >> bin_count;
+    /*//////
+        for (size_t i = 0; i < number_count; i++)
+        {
+            cin >> numbers[i];
+        }*/
+
+   // title.push_back(str);
+    //}
+    /*/////
+    max = numbers[0], min = numbers[0];
+    for (double x : numbers)
+    {
+        if (x > max)
+            max = x;
+        else if (x < min)
+            min = x;
+    }*/
+
+//const auto bins=make_histogram(numbers, number_count, bin_count, max, min);
+    /*/////
+    for (size_t i = 0; i < number_count; i++)
+    {
+        bool f = false;
+        for (size_t j = 0; (j < bin_count - 1) && !f; j++)
+        {
+            auto lo = min + j * bin_size;
+            auto hi = min + (j + 1)*bin_size;
+            if ((lo <= numbers[i]) && (hi > numbers[i]))
+            {
+                bins[j]++;
+                f = true;
+            }
+        }
+        if (!f)
+            bins[bin_count - 1]++;
+    }*/
+
+//const auto bins=make_histogram(numbers, number_count, bin_count, max, min);
+/*Max_bin_index=bins[0];
+    /*for(size_t i=0; i<bin_count; i++)
+    {
+        if (bins[i] > Max_bin_index)
+        {
+            Max_bin_index=bins[i];
+        }
+    }*/
+
+//////////////////
+/*vector<double> input_numbers(istream& in, size_t count)
 {
     vector <double> numbers(count);
     for (size_t i = 0; i <count; i++)
@@ -17,7 +132,9 @@ using namespace std;
         cin >> numbers[i];
     }
     return numbers;
-}*/
+}
+
+
 
 /*void find_minmax(const vector <double>&  numbers, double& max, double& min)
 {
@@ -170,153 +287,3 @@ svg_text(double left, double baseline, string text) {
     }
     svg_end();
 }*/
-//void svg end
-
-
-
-vector<double>
-input_numbers(istream& in, size_t count)
-{
-    vector <double> numbers(count);
-    for (size_t i = 0; i <count; i++)
-    {
-        cin >> numbers[i];
-    }
-    return numbers;
-}
-
-vector<string>
-input_title(istream& in, size_t bin_count)
-{
-    vector <string> title;
-    string str;
-    for(size_t i=0; i<bin_count; i++)
-    {
-        cin >> str;
-        title.push_back(str);
-    }
-    return title;
-}
-
-Input read_input(istream& in) {
-    Input data;
-
-    cerr << "Enter number count: ";
-    size_t number_count;
-    in >> number_count;
-
-    cerr << "Enter numbers: ";
-    data.numbers = input_numbers(in, number_count);
-
-    cerr<<"Bin count :";
-    size_t bin_count;
-    in >> bin_count;
-    data.bin_count=bin_count;
-
-    cerr<<"Titles : \n";
-    data.bin_name = input_title(in, bin_count);
-
-    return data;
-}
-
-int main()
-{
-    size_t   bin_index,Max_bin_index, heigh, title_max, title_len;
-    double bin_size, max, min;
-    Input data;
-    //string str;
-    const size_t Screen_Width=80;
-
-    cerr<<data.bin_name[1].length();
-   /* cerr <<"Number count :";
-    cin >> number_count;*/
-   // vector<string> title;
-    //const vector<size_t> bins(bin_count);
-    read_input(cin);
-    /*cerr<<"Input numbers "<<"\n";
-    const auto numbers=input_numbers(number_count);
-    cerr<<"Bin count :";
-    cin >> bin_count;
-
-   / cerr<<"Titles : \n";
-    */
-
-    /*find_minmax(data.numbers,max, min);
-    cerr<<"max="<<max;
-    cerr<<"min="<<min;*/
-    //bin_size = (max - min) / bin_count;
-    const auto bins=make_histogram(Input a);
-
-    Max_bin_index=bins[0];
-    for(size_t i=0; i<bin_count; i++)
-    {
-        if (bins[i] > Max_bin_index)
-            Max_bin_index=bins[i];
-    }
-
-    //Max_bin_index=max_bin_index(bins,bin_count);
-    //title_max=title[0].length();
-    for(size_t i=0; i<bin_count; i++)
-    {
-        if (data.bin_name[i].length()> title_max)
-            title_max = data.bin_name[i].length();
-    }
-
-
-    int stroke_width=3;
-    const size_t Max_Asterisk=Screen_Width -4-1;
-    //show_histogram_text(numbers,bins,title,bin_count,title_max,Max_Asterisk,Max_bin_index);
-    cerr<<stroke_width;
-    show_histogram_svg(bins, stroke_width);
-    return 1;
-}
-
-//cin >> bin_count;
-    /*//////
-        for (size_t i = 0; i < number_count; i++)
-        {
-            cin >> numbers[i];
-        }*/
-
-   // title.push_back(str);
-    //}
-    /*/////
-    max = numbers[0], min = numbers[0];
-    for (double x : numbers)
-    {
-        if (x > max)
-            max = x;
-        else if (x < min)
-            min = x;
-    }*/
-
-//const auto bins=make_histogram(numbers, number_count, bin_count, max, min);
-    /*/////
-    for (size_t i = 0; i < number_count; i++)
-    {
-        bool f = false;
-        for (size_t j = 0; (j < bin_count - 1) && !f; j++)
-        {
-            auto lo = min + j * bin_size;
-            auto hi = min + (j + 1)*bin_size;
-            if ((lo <= numbers[i]) && (hi > numbers[i]))
-            {
-                bins[j]++;
-                f = true;
-            }
-        }
-        if (!f)
-            bins[bin_count - 1]++;
-    }*/
-
-//const auto bins=make_histogram(numbers, number_count, bin_count, max, min);
-/*Max_bin_index=bins[0];
-    /*for(size_t i=0; i<bin_count; i++)
-    {
-        if (bins[i] > Max_bin_index)
-        {
-            Max_bin_index=bins[i];
-        }
-    }*/
-
-
