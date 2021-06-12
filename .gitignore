@@ -4,3 +4,4 @@
 /obj
 histogram-копия.h
 *.exe
+/curl
