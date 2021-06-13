@@ -2,6 +2,7 @@
 #include <vector>
 #include <string.h>
 #include "histogram.h"
+#include <curl/curl.h>
 
 using namespace std;
 /*struct Input {
@@ -28,8 +29,35 @@ read_input(istream& in) {
 }*/
 //void svg end
 
-int main()
+int main(int argc, char* argv[])
 {
+    //cout<<"argc "<<argc<<" argv[0]="<<argv[0]<<"\n";
+    //cerr<<NULL;
+
+    if (argc>1)
+    {
+        CURL *curl = curl_easy_init();
+        if(curl)
+        {
+            CURLcode res;
+            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
+            res = curl_easy_perform(curl);
+            curl_easy_cleanup(curl);
+            if (res!=0){
+                cerr<<res<<" "<<curl_easy_strerror(res)<<endl;
+                return 1;
+            }
+        }
+
+    }
+    /*if (argc>1)
+    {
+        for (ssize_t i=0; i<argc; i++)
+        {
+            cerr<<"argv["<<i<<"] = "<<argv[i]<<endl;
+        }
+    }*/
+
     size_t number_count, bin_count, bin_index,Max_bin_index, heigh, title_max, title_len;
     double bin_size, max, min;
     //string str;
@@ -72,46 +100,46 @@ int main()
     //show_histogram_text(numbers,bins,title,bin_count,title_max,Max_Asterisk,Max_bin_index);
     cerr<<stroke_width;
     show_histogram_svg(bins, stroke_width);
-    return 1;
+    return 0;
 }
 
 //cin >> bin_count;
-    /*//////
-        for (size_t i = 0; i < number_count; i++)
-        {
-            cin >> numbers[i];
-        }*/
-
-   // title.push_back(str);
-    //}
-    /*/////
-    max = numbers[0], min = numbers[0];
-    for (double x : numbers)
-    {
-        if (x > max)
-            max = x;
-        else if (x < min)
-            min = x;
-    }*/
-
-//const auto bins=make_histogram(numbers, number_count, bin_count, max, min);
-    /*/////
+/*//////
     for (size_t i = 0; i < number_count; i++)
     {
-        bool f = false;
-        for (size_t j = 0; (j < bin_count - 1) && !f; j++)
-        {
-            auto lo = min + j * bin_size;
-            auto hi = min + (j + 1)*bin_size;
-            if ((lo <= numbers[i]) && (hi > numbers[i]))
-            {
-                bins[j]++;
-                f = true;
-            }
-        }
-        if (!f)
-            bins[bin_count - 1]++;
+        cin >> numbers[i];
     }*/
+
+// title.push_back(str);
+//}
+/*/////
+max = numbers[0], min = numbers[0];
+for (double x : numbers)
+{
+    if (x > max)
+        max = x;
+    else if (x < min)
+        min = x;
+}*/
+
+//const auto bins=make_histogram(numbers, number_count, bin_count, max, min);
+/*/////
+for (size_t i = 0; i < number_count; i++)
+{
+    bool f = false;
+    for (size_t j = 0; (j < bin_count - 1) && !f; j++)
+    {
+        auto lo = min + j * bin_size;
+        auto hi = min + (j + 1)*bin_size;
+        if ((lo <= numbers[i]) && (hi > numbers[i]))
+        {
+            bins[j]++;
+            f = true;
+        }
+    }
+    if (!f)
+        bins[bin_count - 1]++;
+}*/
 
 //const auto bins=make_histogram(numbers, number_count, bin_count, max, min);
 /*Max_bin_index=bins[0];
