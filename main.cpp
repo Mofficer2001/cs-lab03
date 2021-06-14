@@ -204,6 +204,7 @@ Input read_input(istream& in) {
     cerr << "Enter number count: ";
     size_t number_count;
     in >> number_count;
+    data.number_count=number_count;
 
     cerr << "Enter numbers: ";
     data.numbers = input_numbers(in, number_count);
@@ -221,13 +222,17 @@ Input read_input(istream& in) {
 
 int main()
 {
+    const char* name = "Commander Shepard";
+    int year = 2154;
+    printf("%s was born in %d.\n", name, year);
+
     size_t   bin_index,Max_bin_index, heigh, title_max, title_len;
     double bin_size, max, min;
-    Input data;
+    Input input;
     //string str;
     const size_t Screen_Width=80;
 
-    cerr<<data.bin_name[1].length();
+    cerr<<input.bin_name[1].length();
    /* cerr <<"Number count :";
     cin >> number_count;*/
    // vector<string> title;
@@ -245,10 +250,10 @@ int main()
     cerr<<"max="<<max;
     cerr<<"min="<<min;*/
     //bin_size = (max - min) / bin_count;
-    const auto bins=make_histogram(Input a);
+    const auto bins=make_histogram(input);
 
     Max_bin_index=bins[0];
-    for(size_t i=0; i<bin_count; i++)
+    for(size_t i=0; i<input.bin_count; i++)
     {
         if (bins[i] > Max_bin_index)
             Max_bin_index=bins[i];
@@ -256,10 +261,10 @@ int main()
 
     //Max_bin_index=max_bin_index(bins,bin_count);
     //title_max=title[0].length();
-    for(size_t i=0; i<bin_count; i++)
+    for(size_t i=0; i<input.bin_count; i++)
     {
-        if (data.bin_name[i].length()> title_max)
-            title_max = data.bin_name[i].length();
+        if (input.bin_name[i].length()> title_max)
+            title_max = input.bin_name[i].length();
     }
 
 

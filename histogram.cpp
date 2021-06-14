@@ -3,14 +3,14 @@
 
 void find_minmax(const vector<double>& numbers,double& max, double& min)
 {
-    Input dat;
+    //Input dat;
     //const vector <double>&  numbers,
    // double min,max;
-    if(dat.numbers.size()!=0)
+    if(numbers.size()!=0)
     {
-        max=dat.numbers[0];
-        min=dat.numbers[0];
-        for (double x : dat.numbers)
+        max=numbers[0];
+        min=numbers[0];
+        for (double x : numbers)
         {
         if (x>max)
             max=x;
@@ -18,7 +18,7 @@ void find_minmax(const vector<double>& numbers,double& max, double& min)
             min=x;
         }
     }
-    else if(dat.numbers.size()==0)
+    else if(numbers.size()==0)
     {
         max=0;
         min=0;
@@ -27,8 +27,7 @@ void find_minmax(const vector<double>& numbers,double& max, double& min)
 
 vector <size_t> make_histogram(Input a)
 {
-    //
-    Input dat;
+
     //const vector<size_t>& bins,
     vector<size_t> bins(a.bin_count);
     double max=0;
