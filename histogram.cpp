@@ -1,16 +1,17 @@
 #include "histogram.h"
 #include <iostream>
 
-void find_minmax(const vector<double>& numbers,double& max, double& min)
+const size_t Screen_Width=80;
+const size_t Max_Asterisk=Screen_Width -4-1;
+
+void find_minmax(const vector <double>&  numbers, double& max, double& min)
 {
-    //Input dat;
-    //const vector <double>&  numbers,
    // double min,max;
     if(numbers.size()!=0)
     {
         max=numbers[0];
         min=numbers[0];
-        for (double x : numbers)
+        for (double x: numbers)
         {
         if (x>max)
             max=x;
@@ -25,9 +26,67 @@ void find_minmax(const vector<double>& numbers,double& max, double& min)
     }
 }
 
+vector<double> input_numbers(istream& in, size_t count)
+{
+    vector <double> numbers(count);
+    for (size_t i = 0; i <count; i++)
+    {
+        cin >> numbers[i];
+    }
+    return numbers;
+}
+
+vector<string> input_title(istream& in, size_t bin_count)
+{
+    string str;
+    vector<string> title;
+    for(size_t i=0; i<bin_count; i++)
+    {
+        cin >>str;
+        title.push_back(str);
+    }
+    return title;
+}
+
+
+Input
+read_input(istream& in, bool prompt) {
+    Input data;
+
+    if (prompt)
+    {
+        cerr << "Enter number count: ";
+        //size_t number_count;
+        in >> data.number_count;
+
+        cerr << "Enter numbers: ";
+        data.numbers = input_numbers(in, data.number_count);
+
+        cerr<<"Enter bin count :";
+        //size_t bin_count;
+        in >> data.bin_count;
+
+        cerr<<"Titles : \n";
+        data.bin_title=input_title(in, data.bin_count);
+    }
+    else
+    {
+        in >> data.number_count;
+        data.numbers = input_numbers(in, data.number_count);
+        in >> data.bin_count;
+        data.bin_title=input_title(in, data.bin_count);
+    }
+
+    //for(size_t i=0; i<input.bin_count; i++)
+    //{
+    //    cin >>str;
+    //    title.push_back(str);
+    //}
+
+    return data;
+}
 vector <size_t> make_histogram(Input a)
 {
-
     //const vector<size_t>& bins,
     vector<size_t> bins(a.bin_count);
     double max=0;
@@ -41,7 +100,7 @@ vector <size_t> make_histogram(Input a)
         {
             auto lo = min + (j * bin_size);
             auto hi = min + (j + 1)*bin_size;
-            if ((lo <= a.numbers[i]) && (hi >a.numbers[i]))
+            if ((lo <= a.numbers[i]) && (hi > a.numbers[i]))
             {
                 bins[j]++;
                 f = true;
@@ -52,27 +111,54 @@ vector <size_t> make_histogram(Input a)
     }
     return bins;
 }
-
-void show_histogram_text(const vector<double>& numbers, const vector<size_t>& bins, const vector<string>& title, double bin_count, double title_max, size_t Max_Asterisk, size_t Max_bin_index)
+double Max_bin_ind(Input a)
 {
+    const auto bins=make_histogram(a);
+    double Max_bin_index=bins[0];
+    for(size_t i=0; i<a.bin_count; i++)
+    {
+        if (bins[i] > Max_bin_index)
+            Max_bin_index=bins[i];
+    }
+    return Max_bin_index;
+}
+
+size_t Max_title(Input a)
+{
+    size_t title_max=a.bin_title[0].length();
+    for(size_t i=0; i<a.bin_count; i++)
+    {
+        if (a.bin_title[i].length()> title_max)
+            title_max = a.bin_title[i].length();
+    }
+    return title_max;
+}
+
+
+
+void show_histogram_text(Input a)
+{
+    vector<size_t> bins=make_histogram(a);
     size_t heigh, title_len;
+    double Max_bin_index=Max_bin_ind(a);
+    auto title_max=Max_title(a);
     //size_t Max_bin_index= max_bin_index(bins,bin_count);
     //const size_t Screen_Width=80;
     //const size_t Max_Asterisk=Screen_Width -4-1;
-    for (size_t i = 0; i < bin_count; i++)
+    for (size_t i = 0; i < a.bin_count; i++)
     {
         if (Max_bin_index>Max_Asterisk)
-            heigh=Max_Asterisk*(static_cast<double>(bins[i])/Max_bin_index);
+            heigh=Max_Asterisk*static_cast<size_t>((bins[i])/Max_bin_index);
         else
             heigh=bins[i];
 
-        title_len=title[i].length();
+        title_len=a.bin_title[i].length();
         //size_t d=title_max-title_len;
         for(size_t k=0; k<title_max-title_len; k++)
         {
             cout<<" ";
         }
-        cout<<title[i]<<"|";
+        cout<<a.bin_title[i]<<"|";
         for (size_t j = 0; j < heigh; j++)
         {
             cout << "*";
@@ -137,4 +223,3 @@ void show_histogram_svg(const vector<size_t>& bins, int stroke_width)
     }
     svg_end();
 }
-
