@@ -77,12 +77,6 @@ read_input(istream& in, bool prompt) {
         data.bin_title=input_title(in, data.bin_count);
     }
 
-    //for(size_t i=0; i<input.bin_count; i++)
-    //{
-    //    cin >>str;
-    //    title.push_back(str);
-    //}
-
     return data;
 }
 vector <size_t> make_histogram(Input a)

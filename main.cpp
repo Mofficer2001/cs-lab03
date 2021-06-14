@@ -3,105 +3,100 @@
 #include <string.h>
 #include "histogram.h"
 #include <curl/curl.h>
+#include <sstream>
+#include <string>
+
+// ...прежние функции...
+
+
 
 using namespace std;
-/*struct Input {
-    vector<double> numbers;
-    size_t bin_count;
-};*/
 
-/*Input
-read_input(istream& in) {
-    Input data;
+size_t
+write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
+    // TODO: дописывать данные к буферу.
+    size_t data_size=item_size*item_count;
+    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
+    buffer->write(reinterpret_cast<const char*>(items), data_size);
+    return data_size;
+}
 
-    cerr << "Enter number count: ";
-    size_t number_count;
-    in >> number_count;
+Input
+download(const string& address)
+{
+    stringstream buffer;
 
-    cerr << "Enter numbers: ";
-    data.numbers = input_numbers(in, number_count);
 
-    cerr<<"Enter bin count :";
-    size_t bin_count;
-    in >> bin_count;
+    CURL *curl = curl_easy_init();
+    if(curl)
+    {
+        curl_off_t ul;
 
-    return data;
-}*/
+        CURLcode res, result;
+        result = curl_easy_getinfo(curl, CURLINFO_SIZE_UPLOAD_T, &ul);
+        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+        result = curl_easy_getinfo(curl, CURLINFO_SIZE_UPLOAD_T, &ul);
+        res = curl_easy_perform(curl);
+        if(!result)
+        {
+            cerr<<"Uploaded %"<<CURL_FORMAT_CURL_OFF_T<<" bytes\n"<< ul;
+        }
+        if (res!=0)
+        {
+            cerr<<res<<" "<<curl_easy_strerror(res)<<endl;
+            exit(1);
+        }
+        curl_easy_cleanup(curl);
+    }
+
+    return read_input(buffer, false);
+}
+
 //void svg end
 
 int main(int argc, char* argv[])
 {
-    //cout<<"argc "<<argc<<" argv[0]="<<argv[0]<<"\n";
-    //cerr<<NULL;
-
+    Input input;
     if (argc>1)
     {
-        CURL *curl = curl_easy_init();
-        if(curl)
-        {
-            CURLcode res;
-            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
-            res = curl_easy_perform(curl);
-            curl_easy_cleanup(curl);
-            if (res!=0){
-                cerr<<res<<" "<<curl_easy_strerror(res)<<endl;
-                return 1;
-            }
-        }
-
+        input=download(argv[1]);
     }
-    /*if (argc>1)
+    else
     {
-        for (ssize_t i=0; i<argc; i++)
-        {
-            cerr<<"argv["<<i<<"] = "<<argv[i]<<endl;
-        }
-    }*/
-
-    size_t number_count, bin_count, bin_index,Max_bin_index, heigh, title_max, title_len;
-    double bin_size, max, min;
-    //string str;
-
-    Input input=read_input(cin, true);
-    //vector<string> title;
-
-    //const vector<size_t> bins(bin_count);
-    //cerr<<"Input numbers "<<"\n";
-    //const auto numbers=input_numbers(cin, number_count);
-
-    /*cerr<<"Titles : \n";
-    for(size_t i=0; i<input.bin_count; i++)
-    {
-        cin >>str;
-        title.push_back(str);
-    }*/
-
-    find_minmax(input.numbers, max, min);
-    //bin_size = (max - min) / bin_count;
+        input=read_input(cin, true);
+    }
     const auto bins=make_histogram(input);
 
-    /*Max_bin_index=bins[0];
-    for(size_t i=0; i<input.bin_count; i++)
-    {
-        if (bins[i] > Max_bin_index)
-            Max_bin_index=bins[i];
-    }*/
-
-    //Max_bin_index=max_bin_index(bins,bin_count);
-    /*title_max=input.bin_title[0].length();
-    for(size_t i=0; i<input.bin_count; i++)
-    {
-        if (input.bin_title[i].length()> title_max)
-            title_max = input.bin_title[i].length();
-    }*/
-
-
     int stroke_width=3;
-    //show_histogram_text(numbers,bins,title,bin_count,title_max,Max_Asterisk,Max_bin_index);
     cerr<<stroke_width;
     show_histogram_svg(bins, stroke_width);
     return 0;
 }
+
+/*if (argc>1)
+{
+    CURL *curl = curl_easy_init();
+    if(curl)
+    {
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+        if (res!=0)
+        {
+            cerr<<res<<" "<<curl_easy_strerror(res)<<endl;
+            exit(1);
+        }
+    }
+    return 0;
+
+}*/
+//bin_size = (max - min) / bin_count;
+//int stroke_width=3;
+//show_histogram_text(numbers,bins,title,bin_count,title_max,Max_Asterisk,Max_bin_index);
+
 
 //cin >> bin_count;
 /*//////
